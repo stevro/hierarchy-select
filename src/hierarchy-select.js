@@ -34,15 +34,28 @@
             }
         },
         setWidth: function() {
+            this.$searchbox.attr('size', 1); // Fix min-width
             if (this.options.width === 'auto') {
                 var width = this.$menu.width();
                 this.$element.css('min-width', width + 2 + 'px');
             } else if (this.options.width) {
                 this.$element.css('width', this.options.width);
+                this.$menu.css('min-width', this.options.width);
+                this.$button.css('width', '100%');
             } else {
                 this.$element.css('min-width', '42px');
             }
         },
+        // setWidth: function() {
+        //     if (this.options.width === 'auto') {
+        //         var width = this.$menu.width();
+        //         this.$element.css('min-width', width + 2 + 'px');
+        //     } else if (this.options.width) {
+        //         this.$element.css('width', this.options.width);
+        //     } else {
+        //         this.$element.css('min-width', '42px');
+        //     }
+        // },
         setHeight: function() {
             if (this.options.height) {
                 this.$menu.css('overflow', 'hidden');
@@ -216,7 +229,7 @@
                     level--;
                     item = item.prevAll('li[data-level="' + level + '"]:first');
                     if (item.hasClass('hidden')) {
-                        item.toggleClass('disabled', true);
+                        item.toggleClass('disabled', !that.options.keepParentsEnabled);
                         item.removeClass('hidden');
                     }
                 }
@@ -306,7 +319,8 @@
         width: 'auto',
         height: '208px',
         hierarchy: true,
-        search: true
+        search: true,
+        keepParentsEnabled: false
     };
     $.fn.hierarchySelect.Constructor = HierarchySelect;
 
